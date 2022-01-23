@@ -1,22 +1,23 @@
 <template>
   <div class="character">
     <div class="character_avatar">
-      <!-- <img :src="character ? character.avatar : null" alt="avatar" width="300" height="300" class="avatar" /> -->
-      <img :src="urlAvatar" alt="avatar" width="300" height="300" class="avatar" />
+      <img :src="character ? character.avatar : null" alt="avatar" width="300" height="300" class="avatar" />
     </div>
     <hr />
-    <div v-for="(value, name) in character" :key="value">
-      <ul class="list">
+    <div>
+      <ul class="list" v-for="(value, name) in character" :key="value">
         <li v-if="typeof value !== 'object' && name !== 'avatar'">
           <strong>{{ name }}:</strong> {{ value }}
         </li>
       </ul>
     </div>
-    <List :data="character?.employment" />
-    <List :data="character?.address" />
-    <List :data="character?.address?.coordinates" />
-    <List :data="character?.credit_card" />
-    <List :data="character?.subscription" />
+    <div>
+      <List :data="checkCharacterEmployment" />
+      <List :data="checkCharacterAddress" />
+      <List :data="character.address?.coordinates ? character.address?.coordinates : {}" />
+      <List :data="checkCharacterCreditCard" />
+      <List :data="checkCharacterSubscription" />
+    </div>
   </div>
 </template>
 <script>
@@ -32,7 +33,20 @@ export default {
       type: Object,
       required: true,
     },
-    urlAvatar: String,
+  },
+  computed: {
+    checkCharacterEmployment() {
+      return this.character.employment ? this.character.employment : {};
+    },
+    checkCharacterAddress() {
+      return this.character.address ? this.character.address : {};
+    },
+    checkCharacterCreditCard() {
+      return this.character.credit_card ? this.character.credit_card : {};
+    },
+    checkCharacterSubscription() {
+      return this.character.subscription ? this.character.subscription : {};
+    },
   },
 };
 </script>
@@ -48,6 +62,7 @@ export default {
   width: 300px;
   height: 300px;
   margin: auto;
+  background-color: white;
 }
 .avatar {
   border-radius: 50%;

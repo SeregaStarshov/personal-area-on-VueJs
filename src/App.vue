@@ -1,6 +1,6 @@
 <template>
   <div class="personal-area">
-    <Character :character="character" :urlAvatar="character.avatar" />
+    <Character :character="character" />
     <ContentArea :dataBeer="arrayBeers" />
   </div>
 </template>
